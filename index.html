@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Everything</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            font-family: 'Georgia', serif;
+            background-color: #0b010d;
+            color: #fff;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* SCREEN 1: PASSWORD SCREEN */
+        #password-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #200122 0%, #000000 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .login-box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 182, 193, 0.2);
+            text-align: center;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            z-index: 12;
+        }
+
+        .login-box h2 {
+            color: #ff6b8b;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 1rem;
+            text-align: center;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .login-box input:focus {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 10px rgba(255, 107, 139, 0.5);
+        }
+
+        .login-box button {
+            background: linear-gradient(45deg, #ff4757, #ff6b8b);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .login-box button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
+        }
+
+        /* Floating Background Hearts */
+        .bg-heart {
+            position: absolute;
+            color: rgba(255, 107, 139, 0.4);
+            font-size: 24px;
+            pointer-events: none;
+            animation: flyUpwards 6s linear infinite;
+            bottom: -50px;
+        }
+
+        @keyframes flyUpwards {
+            0% {
+                transform: translateY(0) translateX(0) scale(0.5);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% {
+                transform: translateY(-105vh) translateX(100px) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* Big Unlock Heart Animation */
+        #unlock-heart {
+            position: absolute;
+            font-size: 2rem;
+            color: #ff4757;
+            display: none;
+            z-index: 15;
+            pointer-events: none;
+            text-shadow: 0 0 20px rgba(255, 71, 87, 0.8);
+        }
+
+        .heart-grow-blow {
+            display: block !important;
+            animation: growAndBlow 1.5s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes growAndBlow {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(15); opacity: 0.8; filter: blur(0px); }
+            100% { transform: scale(40); opacity: 0; filter: blur(10px); }
+        }
+
+
+        /* SCREEN 2: MAIN ROMANTIC CONTENT */
+        #main-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: none;
+            justify-content: center;
+            align-items: flex-start;
+            overflow: hidden;
+        }
+
+        /* Scrolling Message Container */
+        #scrolling-container {
+            position: relative;
+            width: 90%;
+            max-width: 650px;
+            text-align: center;
+            margin-top: 100vh;
+            padding-bottom: 100px;
+        }
+
+        .scroll-animation {
+            animation: scrollUp 48s linear forwards;
+        }
+
+        @keyframes scrollUp {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-280%); } 
+        }
+
+        .message-paragraph {
+            font-size: 1.35rem;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            color: #ffe4e8;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .highlight-text {
+            color: #ff4757;
+            font-weight: bold;
+        }
+
+        .romantic-lines {
+            font-style: italic;
+            color: #ffb6c1;
+            font-size: 1.4rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 30px 0;
+            margin: 50px 0;
+        }
+
+        .final-declaration {
+            font-size: 1.6rem;
+            line-height: 2;
+            color: #fff;
+            margin-top: 40px;
+        }
+
+        /* 360 Degree Blast Elements & Poppers */
+        .burst-emoji, .popping-element {
+            position: absolute;
+            pointer-events: none;
+            user-select: none;
+            z-index: 5;
+        }
+
+        .burst-emoji {
+            font-size: 2rem;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Big Kiss Emoji Finale */
+        #big-kiss-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            font-size: 12rem;
+            z-index: 20;
+            pointer-events: none;
+            display: none;
+        }
+
+        .final-kiss-bounce {
+            display: block !important;
+            animation: massiveKiss 2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes massiveKiss {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+            65% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+        }
+
+        /* Audio Element hidden styling */
+        audio {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- EMBEDDED ROMANTIC BACKGROUND MUSIC -->
+    <audio id="romantic-song" loop preload="auto">
+        <source src="https://assets.mixkit.co/music/preview/mixkit-beautiful-dream-493.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- SCREEN 1: PASSWORD SCREEN -->
+    <div id="password-screen">
+        <div class="login-box">
+            <h2>Enter Security Key to Open My Heart</h2>
+            <input type="text" id="password-input" placeholder="Hint: A🖤S...">
+            <br>
+            <button onclick="checkPassword()">Unlock</button>
+        </div>
+        <div id="flying-hearts-container"></div>
+    </div>
+
+    <!-- CENTRAL TRANSITION ELEMENT -->
+    <div id="unlock-heart">❤️</div>
+
+    <!-- SCREEN 2: MAIN ROMANTIC CONTENT -->
+    <div id="main-screen">
+        <div id="scrolling-container">
+            
+            <!-- Main Message -->
+            <p class="message-paragraph">
+                I may not always have the perfect words or the grand gestures, but please never doubt this: 
+                <span class="highlight-text">loving you is the best thing I've ever done.</span> You turn the ordinary into magic.
+            </p>
+            
+            <p class="message-paragraph">
+                Your laugh still stops me in my tracks, and the way you love, fiercely and fully, inspires me every day.
+            </p>
+            
+            <p class="message-paragraph">
+                I see the sacrifices, the strength, and the softness you hold all at once. I see you, truly.
+            </p>
+            
+            <p class="message-paragraph" style="font-size: 1.6rem; font-weight: bold;">
+                And I'm still in awe that I get to call you mine.
+            </p>
+
+            <!-- Custom Romantic Lines Block -->
+            <div class="romantic-lines">
+                "In a room full of art, I'd still stare at you.<br>
+                You are my today, my tomorrow, and all of my remaining passings of time.<br>
+                With you, even the quiet moments feel like a beautiful melody."
+            </div>
+
+            <!-- Final Hindi + English Message -->
+            <div class="final-declaration">
+                <h3 style="color: #ff4757; font-size: 2rem; margin-bottom: 15px;">My Dear Love</h3>
+                Tum mera wo Sukoon ho jo mujhe zindagi bhar Chahiye...<br>
+                Mujhse kabhi dur maat hona Jaan 🫀<br><br>
+                <span style="color: #ff6b8b; font-weight: bold; word-break: break-all;">
+                    I Loveeeeeeeeeeeeeeeeeeeeeee youuuuuuuuuuuuuuuuuu Sooooooooooooooooooooo muchhhhhhhhhhhhh Jaan 🫀
+                </span><br><br>
+                My Everything. My World 🌍
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FINAL MASSIVE KISS POP -->
+    <div id="big-kiss-container">😘</div>
+
+    <script>
+        // System Password
+        const CORRECT_PASSWORD = "A🖤S2807"; 
+
+        // Generate flying background hearts for password screen
+        const flyingContainer = document.getElementById('flying-hearts-container');
+        const heartSymbols = ['❤️', '💖', '💝', '💕', '💗'];
+        
+        for (let i = 0; i < 25; i++) {
+            createBackgroundHeart();
+        }
+
+        function createBackgroundHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'bg-heart';
+            heart.innerText = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDelay = Math.random() * 6 + 's';
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+            flyingContainer.appendChild(heart);
+        }
+
+        // Check Password Logic
+        function checkPassword() {
+            const input = document.getElementById('password-input').value.trim();
+            if (input === CORRECT_PASSWORD) {
+                playSong();
+                executeTransition();
+            } else {
+                alert("Incorrect Password! Enter exactly with the correct emoji and layout. 🖤");
+            }
+        }
+
+        // Support pressing Enter key to unlock
+        document.getElementById('password-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        // Plays audio smoothly
+        function playSong() {
+            const song = document.getElementById('romantic-song');
+            song.volume = 0.5; // Comfortable background volume level
+            song.play().catch(error => {
+                console.log("Audio playback was caught or managed successfully.", error);
+            });
+        }
+
+        // Handles the sequence shift from Screen 1 to Screen 2
+        function executeTransition() {
+            const passScreen = document.getElementById('password-screen');
+            const unlockHeart = document.getElementById('unlock-heart');
+            const mainScreen = document.getElementById('main-screen');
+
+            passScreen.style.opacity = '0';
+            
+            setTimeout(() => {
+                passScreen.style.display = 'none';
+                unlockHeart.classList.add('heart-grow-blow');
+                
+                setTimeout(() => {
+                    mainScreen.style.display = 'flex';
+                    blastKissingEmojis();
+                    
+                    setTimeout(() => {
+                        const scrollContainer = document.getElementById('scrolling-container');
+                        scrollContainer.classList.add('scroll-animation');
+                        startPoppingInterval();
+                        trackMessageEnd();
+                    }, 800);
+
+                }, 1400); 
+            }, 1000);
+        }
+
+        // Blast 100 Kissing Emojis across 360 Degrees
+        function blastKissingEmojis() {
+            const totalEmojis = 100;
+            const main = document.getElementById('main-screen');
+
+            for (let i = 0; i < totalEmojis; i++) {
+                const emoji = document.createElement('div');
+                emoji.className = 'burst-emoji';
+                emoji.innerText = '😘';
+                
+                const angle = Math.random() * 2 * Math.PI;
+                const velocity = Math.random() * 400 + 150; 
+                
+                const destinationX = Math.cos(angle) * velocity;
+                const destinationY = Math.sin(angle) * velocity;
+                
+                main.appendChild(emoji);
+
+                const animation = emoji.animate([
+                    { transform: 'translate(-50%, -50%) scale(0.2) translate(0, 0)', opacity: 1 },
+                    { transform: `translate(-50%, -50%) scale(1.3) translate(${destinationX}px, ${destinationY}px)`, opacity: 1 },
+                    { transform: `translate(-50%, -50%) scale(0.8) translate(${destinationX * 1.1}px, ${destinationY * 1.1}px)`, opacity: 0 }
+                ], {
+                    duration: Math.random() * 1500 + 1500, 
+                    easing: 'cubic-bezier(0.1, 0.8, 0.25, 1)',
+                    fill: 'forwards'
+                });
+
+                animation.onfinish = () => emoji.remove();
+            }
+        }
+
+        // Floating ambient hearts and kisses during text scrolling
+        let popperInterval;
+        function startPoppingInterval() {
+            const main = document.getElementById('main-screen');
+            const items = ['😘', '❤️', '💋', '💖', '✨'];
+
+            popperInterval = setInterval(() => {
+                const popper = document.createElement('div');
+                popper.className = 'popping-element';
+                popper.innerText = items[Math.floor(Math.random() * items.length)];
+                popper.style.left = Math.random() * 90 + 5 + 'vw';
+                popper.style.top = Math.random() * 80 + 10 + 'vh';
+                popper.style.fontSize = Math.random() * 1.5 + 1 + 'rem';
+                
+                main.appendChild(popper);
+
+                popper.animate([
+                    { transform: 'scale(0)', opacity: 0 },
+                    { transform: 'scale(1.4)', opacity: 1 },
+                    { transform: 'scale(1) translateY(-30px)', opacity: 0 }
+                ], {
+                    duration: 2000,
+                    easing: 'ease-out'
+                }).onfinish = () => popper.remove();
+
+            }, 350); 
+        }
+
+        // Detects completion of scroll timeline for finale kiss
+        function trackMessageEnd() {
+            const scrollContainer = document.getElementById('scrolling-container');
+            
+            scrollContainer.addEventListener('animationend', () => {
+                clearInterval(popperInterval); 
+                
+                const finalKissBox = document.getElementById('big-kiss-container');
+                finalKissBox.classList.add('final-kiss-bounce');
+            });
+        }
+    </script>
+</body>
+</html>
